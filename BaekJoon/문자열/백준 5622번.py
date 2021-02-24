@@ -7,7 +7,7 @@ cnt = 0
 if __name__ == "__main__" :
     Str = input()
     for i in range(0,len(Str)):
-        if(Str[i]>='A' and Str[i]<='C'):
+        if(Str[i]>='A' and Str[i]<='C'): ##해당하는 알파벳의 거리만큼 더해준다
             cnt+=3
         elif(Str[i]>='D' and Str[i]<='F'):
             cnt+=4
@@ -25,3 +25,6 @@ if __name__ == "__main__" :
             cnt += 10
 
     print("%d"%cnt)
+
+##해당하는 알파벳만큼 cnt를 더해서 올려주면 되는 문제
+##쉽게 풀 수 있다.
