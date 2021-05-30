@@ -4,7 +4,6 @@
 M = 0
 N = 0
 min = 0
-isFirst = 0
 sum = 0
 isRight = 0
 ##메인 함수 부분##
@@ -22,7 +21,6 @@ if __name__ == "__main__":
 
         if isRight == 1 or i == 2: #2가 누락이 되므로 2인 경우만 포함해준다.
             if sum == 0: #소수를 구했지만 sum이 0이라는 것은 첫번째 경우이기 때문에
-                isFirst = 1 #isFirst에 1을 넣어주고 그 값을 min에 저장
                 min = i
             sum += i
     if sum == 0:

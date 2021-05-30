@@ -8,7 +8,7 @@ prime = []
 ##메인 함수 부분
 if __name__ == "__main__":
     prime = 250000 * [True] #250000개의 True가 들어있는 배열을 만들어준다.
-    for i in range(2,500): #250000의 제곱수만큼 반복해줘도 된다
+    for i in range(2,500): #250000의 제곱근만큼 반복해줘도 된다
         for j in range(2*i,250000,i): #본인의 배수들을 모두 지워준다.
             if prime[j]:
                 prime[j] = False

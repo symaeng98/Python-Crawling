@@ -3,7 +3,7 @@
 
 ##변수 선언 부분
 
-cnt = 0
+
 ##메인 함수 부분
 if __name__ == "__main__":
     T = int(input())
