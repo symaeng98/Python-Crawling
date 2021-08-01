@@ -11,7 +11,7 @@ def mat_mult(A, B, N):
     return C
 def mult(A, B, N):
     if B == 1:
-        for i in range(N):
+        for i in range(N): #나머지값 저장
             for j in range(N):
                 A[i][j] = A[i][j] % 1000
         return A
@@ -19,16 +19,10 @@ def mult(A, B, N):
     if B % 2 == 0:
         tmp = mult(A, B // 2, N)
         C = mat_mult(tmp,tmp,N)
-        for i in range(N):
-            for j in range(N):
-                C[i][j] = C[i][j] % 1000
         return C
     else:
         tmp = mult(A, B-1, N)
         C = mat_mult(tmp,A,N)
-        for i in range(N):
-            for j in range(N):
-                C[i][j] = C[i][j] % 1000
         return C
 
 ##변수 선언 부분
