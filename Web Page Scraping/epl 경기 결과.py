@@ -1,6 +1,10 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
+#<죵재>
+#/Users/yongcho/Downloads/chromedriver
+#C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe
+
 browser = webdriver.Chrome("C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe") #'./chromedriver'
 # browser.maximize_window() #창 최대화
 url = 'https://www.flashscore.co.kr/soccer/england/premier-league/archive/'
