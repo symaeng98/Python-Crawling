@@ -12,7 +12,7 @@ import numpy as np
 
 # CSV파일을 읽고 배열로 변환하기
 readList = []
-professorList = [[''] for _ in range(9)]
+professorList = [[''] for _ in range(10)]
 maengFile = 'C:\PythonPractice\Python\해커톤(2021-2학기)\professorList.csv'
 yongFile = '/Users/yongcho/Desktop/Project/해커톤/profName.csv'
 
@@ -21,17 +21,33 @@ with open(maengFile, 'r') as f:
     for line in f:
         readList.append(line)
     # 과를 포함한 교수님 리스트 (2차원 배열)
-    for i in range(9):
-        professorList[i] = readList[i].split(',')
+    for i in range(10):
+
+        if i < 9:
+            professorList[i] = readList[i].split(',')
+        else:
+            list = readList[i].split('\t')
+
+            # 교양 교수님들 중복 제거
+            for k in range(len(list)):
+                print(list[k])
+                if list[k] not in professorList[i]:
+                    professorList[i].append(list[k])
 
     professors = []  # 교수님 전체를 담은 리스트 (1차원 배열)
-    for i in range(9):
+    for i in range(10):
         for j in range(1, len(professorList[i])):
             if len(professorList[i][j]) < 2:
                 continue
+
             professors.append(professorList[i][j])
-            if professorList[i][j].endswith(')'): #학과장이면,
-                professors[-1] = professors[-1][:3] #학과장 표시 없애줌
+
+            if professorList[i][j].endswith(')'):  # 학과장이면,
+                professors[-1] = professors[-1][:3]  # 학과장 표시 없애줌
+
+            if j == len(professorList[i]) - 1 and i != 9:  # 마지막 사람 개행 표시 지우기
+
+                professors[-1] = professors[-1][:-1]
 
 yongDriver = '/Users/yongcho/Desktop/Tool/chromedriver'
 maengDriver = 'C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe'
@@ -97,7 +113,6 @@ for pro in professors:
     classEval = []  # 강평
     class_feature = {}
 
-
     for k in range(1, len(star) + 1):  # 별점이 있는 것들만 반복
         isRate = browser.find_element_by_xpath(f'//*[@id="container"]/div/a[{k}]/p/span/span').get_attribute('style')
         # soup2 = BeautifulSoup(browser.page_source, 'lxml')
@@ -121,10 +136,9 @@ for pro in professors:
         # 강평DD
         classEval = ([e.text for e in browser.find_elements_by_class_name('text')])
         df = df.append(pd.Series([className, professorName, classScore, classAssign, classTeamPl, classGradeRate],
-                            index=df.columns), ignore_index=True)
+                                 index=df.columns), ignore_index=True)
         # print(className, classScore, classAssign, classTeamPl, classGradeRate, classEval)
 
         browser.back()
-
 
 df.to_csv('ClassList.csv', encoding='utf-8-sig')
