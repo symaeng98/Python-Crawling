@@ -7,10 +7,10 @@ import csv
 yongDriver = '/Users/yongcho/Desktop/Tool/chromedriver'
 maengDriver = 'C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe'
 yongHeader = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36'
-maengHeader = ''
+maengHeader = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36'
 
-headers = {'User-Agent': yongHeader}
-browser = webdriver.Chrome(yongDriver)  # './chromedriver'
+headers = {'User-Agent': maengHeader}
+browser = webdriver.Chrome(maengDriver)  # './chromedriver'
 url = 'http://www.sejong.ac.kr/college/index.html'
 browser.get(url)
 

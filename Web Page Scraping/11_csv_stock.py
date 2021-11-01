@@ -22,5 +22,5 @@ for page in range(1,5):
         if len(columns) <= 1: #의미 없는 데이터 skip
             continue
         data = [column.get_text().strip() for column in columns]
-        # print(data)
+        print(data)
         writer.writerow(data) #writerow()인자는 list
