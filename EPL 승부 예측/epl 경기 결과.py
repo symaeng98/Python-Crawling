@@ -3,12 +3,14 @@ from bs4 import BeautifulSoup
 import time
 import csv
 #<죵재>
-
+#/Users/yongcho/Downloads/chromedriver
+#<aodtns>
 #C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe
-yong_path = "/Users/yongcho/Downloads/chromedriver"
+yong_path = "/Users/yongcho/Desktop/Tool/chromedriver"
 maeng_path = "C:\PythonPractice\Python\Web Page Scraping\chromedriver.exe"
 
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~driver 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 browser = webdriver.Chrome(maeng_path) #'./chromedriver'
 # browser.maximize_window() #창 최대화
 url = 'https://www.flashscore.co.kr/soccer/england/premier-league/archive/'
@@ -39,21 +41,23 @@ for i in range(1,4):
     year1 -= i
     year2 -= i
     browser.find_element_by_link_text(f"프리미어리그 {year1}/{year2}").click()
-
+    browser.implicitly_wait(5)
     #시즌 페이지에서 결과창 불러오기
     browser.execute_script("window.scrollTo(0,300)") #300크기만큼 스크롤 내림
     browser.find_element_by_link_text("결과").click()
-
+    browser.implicitly_wait(5)
 
     #결과 창에서 id 찾기 + 더 많은 경기 보기
     soup = BeautifulSoup(browser.page_source,'lxml')
     for j in range(3):
+
         browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+        browser.implicitly_wait(7)
         more_match = soup.find("a",attrs={"class":"event__more event__more--static"}).get_text()
         if len(more_match) == 0:
             break
         browser.find_element_by_link_text("더 많은 경기 보기").click()
-        time.sleep(1)
+        browser.implicitly_wait(7)
 
     soup = BeautifulSoup(browser.page_source, 'lxml')
     arr = soup.find_all('div', attrs={'title':"경기세부사항을 보려면 클릭"})
@@ -66,6 +70,7 @@ for i in range(1,4):
 
     for j in range(len(id_arr)):
         #새로운 창에 대해 url 얻기
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~driver 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         browser2 = webdriver.Chrome(maeng_path) #'./chromedriver'
         url_for_statistic = f"https://www.flashscore.co.kr/match/{id_arr[j]}/#match-summary/match-statistics/0"
         browser2.get(url_for_statistic)
@@ -118,15 +123,17 @@ for i in range(1,4):
         season_data[game_cnt][1] = away_name
         season_data[game_cnt][2] = home_score
         season_data[game_cnt][3] = away_score
-        if(len(home_data_score)==14):
-            home_data_score.insert(8,'X')
-            away_data_score.insert(8,'X')
-        if(len(home_data_score)==15):
-            home_data_score.insert(11,'X')
-            away_data_score.insert(11,'X')
-        if (len(home_data_score) == 17):
-            home_data_score.pop(11)
-            away_data_score.pop(11)
+
+        if '경고' not in category_name:
+            home_data_score.insert(8,0)
+            away_data_score.insert(8,0)
+        if '스로우인' not in category_name:
+            home_data_score.insert(11,0)
+            away_data_score.insert(11,0)
+        if '퇴장' in category_name:
+            home_data_score.pop(category_name.index('퇴장'))
+            away_data_score.pop(category_name.index('퇴장'))
+
         for k in range(4, 36):
             if k % 2 == 0:
                 season_data[game_cnt][k] = home_data_score[(k//2)-2]
@@ -138,3 +145,4 @@ for i in range(1,4):
         game_cnt += 1
 
         browser2.close()
+    browser.back()
