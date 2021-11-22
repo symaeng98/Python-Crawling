@@ -23,7 +23,7 @@ browser.execute_script("window.scrollTo(0,300)") #300크기만큼 스크롤 내�
 # browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
 #파일 오픈
-filename = "Dataset.csv"
+filename = "Dataset1.csv"
 file = open(filename, "w", encoding="utf-8-sig",  newline="")
 csvfile = csv.writer(file) #writer로 파일 쓰기
 
@@ -36,8 +36,9 @@ csvfile.writerow(feature)
 year1 = 2020
 year2 = 2021
 game_cnt = 0
+cnt = 0
 season_data = [['' for x in range(36)] for _ in range(1520)] #모든 데이터를 1차원 배열로 담을거임
-for i in range(1,4):
+for i in range(0,4):
     year1 -= i
     year2 -= i
     browser.find_element_by_link_text(f"프리미어리그 {year1}/{year2}").click()
@@ -69,6 +70,9 @@ for i in range(1,4):
         id_arr.append(ar['id'])
 
     for j in range(len(id_arr)):
+        cnt+=1
+        if(cnt<300):
+            continue
         #새로운 창에 대해 url 얻기
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~driver 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         browser2 = webdriver.Chrome(maeng_path) #'./chromedriver'
