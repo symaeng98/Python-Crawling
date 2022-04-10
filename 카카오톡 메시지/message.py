@@ -6,10 +6,7 @@ import json
 url = "https://kauth.kakao.com/oauth/token"
 
 data = {
-    "grant_type" : "authorization_code",
-    "client_id" : "5931ac3ae1a7daf08eb7253bda790f28",
-    "redirect_url" : "https://naver.com",
-    "code" : "pthHkRr_tFTlEjJwgjqZZXbGNQn1456JZc6j3Ev3zSVz2NupsyaNx17AFRbPAZembb6VBgo9dZwAAAF-57A6og"
+
 }
 response = requests.post(url, data=data)
 tokens = response.json()
